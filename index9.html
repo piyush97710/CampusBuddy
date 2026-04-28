@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CampusBuddy</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+  background:linear-gradient(135deg,#eef2ff,#dbeafe);
+}
+
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;
+  padding:18px 40px;background:white;
+}
+
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:40px;}
+.logo h2{color:#4f46e5;font-size:24px;}
+
+/* LOGIN */
+.login-box{
+  max-width:420px;margin:100px auto;
+  background:white;padding:35px;border-radius:15px;
+}
+.login-box input{
+  width:100%;padding:16px;margin:12px 0;
+}
+.login-box button{
+  width:100%;padding:16px;background:#4f46e5;color:white;
+}
+
+/* NAV */
+nav{display:flex;justify-content:center;gap:20px;margin:20px;}
+nav button{
+  padding:12px 28px;border:none;
+  background:#e0e7ff;color:#4f46e5;
+  border-radius:25px;cursor:pointer;
+  transition:0.3s;
+}
+nav button:hover{
+  background:#4f46e5;color:white;
+}
+
+/* SEARCH */
+.search-box{
+  max-width:1000px;margin:30px auto;
+}
+.search-box input{
+  width:100%;padding:20px;font-size:17px;
+  border-radius:14px;border:1px solid #ccc;
+}
+.search-btn{
+  width:100%;padding:18px;margin-top:12px;
+  background:#22c55e;color:white;
+  border:none;border-radius:14px;
+}
+
+/* CARD */
+.card{
+  display:flex;gap:18px;
+  background:white;padding:18px;
+  margin:18px auto;border-radius:15px;
+  max-width:900px;
+  transition:0.3s;
+}
+.card:hover{
+  transform:translateY(-6px);
+}
+
+/* IMAGE */
+.card img{
+  width:130px;height:130px;
+  object-fit:cover;border-radius:10px;
+}
+
+/* TEXT */
+.card-content h3{
+  font-size:22px;font-weight:700;
+}
+.card-content p{
+  font-size:15px;margin:4px 0;
+}
+
+/* TAG */
+.tag{
+  display:inline-block;
+  background:#e0e7ff;
+  color:#4f46e5;
+  padding:4px 10px;
+  border-radius:10px;
+  margin-right:5px;
+  font-size:12px;
+}
+
+/* BUTTON */
+.btn{
+  padding:8px 15px;margin-top:8px;
+  border:none;border-radius:8px;
+  cursor:pointer;color:white;
+}
+.book{background:#22c55e;}
+.whatsapp{background:#25D366;}
+.map{background:#3b82f6;}
+.review{background:#f59e0b;}
+
+.hidden{display:none;}
+
+/* FOOTER (transparent) */
+footer{
+  margin-top:40px;
+  background:transparent;
+  color:#334155;
+  text-align:center;
+  padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <h2>CampusBuddy</h2>
+  </div>
+  <p>Smart Student Platform</p>
+</header>
+
+<!-- LOGIN -->
+<div id="loginPage" class="login-box">
+  <h2>Login</h2>
+  <input placeholder="Username">
+  <input placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="app" class="hidden">
+
+<nav>
+  <button onclick="show('dashboard')">Dashboard</button>
+  <button onclick="show('pg')">PG</button>
+  <button onclick="show('jobs')">Jobs</button>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="card">
+    <img src="https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg">
+    <div class="card-content">
+      <h3>Welcome 🎓</h3>
+      <p>Find PGs & jobs easily near your college.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PG -->
+<div id="pg" class="hidden">
+  <div class="search-box">
+    <input id="searchInput" placeholder="Search College / Location (e.g. Delhi University / North Campus)">
+    <button class="search-btn" onclick="searchPG()">Search PG</button>
+  </div>
+  <div id="pgResults"></div>
+</div>
+
+<!-- JOB -->
+<div id="jobs" class="hidden">
+  <div id="jobResults"></div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 CampusBuddy | All Rights Reserved</p>
+</footer>
+
+<script>
+
+function login(){
+  loginPage.classList.add("hidden");
+  app.classList.remove("hidden");
+}
+
+function show(id){
+  dashboard.classList.add("hidden");
+  pg.classList.add("hidden");
+  jobs.classList.add("hidden");
+  document.getElementById(id).classList.remove("hidden");
+}
+
+/* PG DATA with reviews */
+const pgData=[
+  {
+    college:"Delhi University",
+    name:"DU Boys PG",
+    location:"North Campus",
+    price:"₹8000",
+    contact:"919876543210",
+    rating:"4.5⭐",
+    map:"https://maps.google.com?q=North+Campus+Delhi",
+    features:["WiFi","Food","AC"],
+    reviews:["Good rooms","Nice food","Near college"]
+  },
+  {
+    college:"Delhi University",
+    name:"Girls PG Kamla Nagar",
+    location:"Kamla Nagar",
+    price:"₹7500",
+    contact:"919876500000",
+    rating:"4.2⭐",
+    map:"https://maps.google.com?q=Kamla+Nagar+Delhi",
+    features:["WiFi","Food"],
+    reviews:["Safe","Affordable","Good locality"]
+  },
+  {
+    college:"JIS College",
+    name:"JIS Comfort PG",
+    location:"Kalyani",
+    price:"₹5000",
+    contact:"919123456780",
+    rating:"4.3⭐",
+    map:"https://maps.google.com?q=JIS+College+Kalyani",
+    features:["WiFi","Laundry"],
+    reviews:["Budget friendly","Clean","Helpful owner"]
+  }
+];
+
+/* JOB DATA */
+const jobData=[
+  {title:"Part Time Sales",company:"Reliance",salary:"₹8000",contact:"919999999999"},
+  {title:"Delivery Executive",company:"Zomato",salary:"Flexible",contact:"918888888888"},
+  {title:"Store Assistant",company:"Big Bazaar",salary:"₹7000",contact:"917777777777"}
+];
+
+/* SEARCH PG */
+function searchPG(){
+  let val=searchInput.value.toLowerCase();
+  pgResults.innerHTML="";
+
+  let res=pgData.filter(p=>
+    p.college.toLowerCase().includes(val) ||
+    p.location.toLowerCase().includes(val)
+  );
+
+  res.forEach((p,i)=>{
+    let tags=p.features.map(f=>`<span class="tag">${f}</span>`).join("");
+
+    pgResults.innerHTML+=`
+    <div class="card">
+      <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg">
+      <div class="card-content">
+        <h3>${p.name}</h3>
+        <p>${p.college} • ${p.location}</p>
+        <p>${p.price} • ${p.rating}</p>
+        <p>📞 ${p.contact}</p>
+
+        ${tags}
+
+        <br>
+        <button class="btn book">Book Now</button>
+
+        <a href="https://wa.me/${p.contact}" target="_blank">
+          <button class="btn whatsapp">WhatsApp</button>
+        </a>
+
+        <a href="${p.map}" target="_blank">
+          <button class="btn map">View Map</button>
+        </a>
+
+        <button class="btn review" onclick="toggleReview(${i})">View Reviews</button>
+
+        <div id="review-${i}" style="display:none;margin-top:8px;">
+          ${p.reviews.map(r=>`<p>⭐ ${r}</p>`).join("")}
+        </div>
+
+      </div>
+    </div>`;
+  });
+}
+
+/* TOGGLE REVIEW */
+function toggleReview(i){
+  let div=document.getElementById("review-"+i);
+  div.style.display = (div.style.display==="none") ? "block" : "none";
+}
+
+/* LOAD JOBS */
+jobData.forEach(j=>{
+  jobResults.innerHTML+=`
+  <div class="card">
+    <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg">
+    <div class="card-content">
+      <h3>${j.title}</h3>
+      <p>${j.company}</p>
+      <p>${j.salary}</p>
+      <p>📞 ${j.contact}</p>
+
+      <button class="btn book">Apply Now</button>
+
+      <a href="https://wa.me/${j.contact}" target="_blank">
+        <button class="btn whatsapp">Contact</button>
+      </a>
+    </div>
+  </div>`;
+});
+
+</script>
+
+</body>
+</html>
